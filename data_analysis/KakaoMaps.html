@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>데이터 분석을 통한 주차현황</title>
+    
+</head>
+<body>
+<h2 align="center">데이터 분석을 통한 주차현황</h2>
+<div id="map" style="width:900px; height:550px; margin: auto;"></div>
+<p align="center">
+    <button onclick="hideMarkers()">마커 감추기</button>
+    <button onclick="showMarkers()">마커 보이기</button>
+    <input type="checkbox" id="chkUseDistrict" onclick="setOverlayMapTypeId()" /> 지적편집도 정보 보기
+    <input type="checkbox" id="chkTerrain" onclick="setOverlayMapTypeId()" /> 지형정보 보기 
+    <input type="checkbox" id="chkTraffic" onclick="setOverlayMapTypeId()" checked="checked" /> 교통정보 보기       
+    <input type="checkbox" id="chkBicycle" onclick="setOverlayMapTypeId()" /> 자전거도로 정보 보기
+</p>
+<p align="center"><em>클릭한 위치에 차량의 GPS 위치가 표시됩니다!</em></p>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d7aa1f48cb081dfe6bdc2e9c4e7beb61&libraries=services,drawing"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(35.156471, 129.059117), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 도형 스타일을 변수로 설정합니다
+var strokeColor = '#b26bb2',
+    fillColor = '#f9f',
+    fillOpacity = 0.7,
+    hintStrokeStyle = 'dash';
+
+var imageSrc0 = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+var imageSize0 = new kakao.maps.Size(24, 35);
+var Image0 = new kakao.maps.MarkerImage(imageSrc0, imageSize0);
+
+var options = { // Drawing Manager를 생성할 때 사용할 옵션입니다
+    map: map, // Drawing Manager로 그리기 요소를 그릴 map 객체입니다
+    image: Image0,
+    drawingMode: [
+        kakao.maps.Drawing.OverlayType.MARKER,
+        kakao.maps.Drawing.OverlayType.ARROW,
+        kakao.maps.Drawing.OverlayType.POLYLINE,
+        kakao.maps.Drawing.OverlayType.RECTANGLE,
+        kakao.maps.Drawing.OverlayType.CIRCLE,
+        kakao.maps.Drawing.OverlayType.ELLIPSE,
+        kakao.maps.Drawing.OverlayType.POLYGON
+    ],
+    // 사용자에게 제공할 그리기 가이드 툴팁입니다
+    // 사용자에게 도형을 그릴때, 드래그할때, 수정할때 가이드 툴팁을 표시하도록 설정합니다
+    guideTooltip: ['draw', 'drag', 'edit'], 
+    markerOptions: {
+        draggable: true,
+        removable: true
+    },
+    arrowOptions: {
+        draggable: true,
+        removable: true,
+        strokeColor: strokeColor,
+        hintStrokeStyle: hintStrokeStyle
+    },
+    polylineOptions: {
+        draggable: true,
+        removable: true,
+        strokeColor: strokeColor,
+        hintStrokeStyle: hintStrokeStyle
+    },
+    rectangleOptions: {
+        draggable: true,
+        removable: true,
+        strokeColor: strokeColor,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity
+    },
+    circleOptions: {
+        draggable: true,
+        removable: true,
+        strokeColor: strokeColor,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity
+    },
+    ellipseOptions: {
+        draggable: true,
+        removable: true,
+        strokeColor: strokeColor,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity
+    },
+    polygonOptions: {
+        draggable: true,
+        removable: true,
+        strokeColor: strokeColor,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity
+    }
+};
+
+// 위에 작성한 옵션으로 Drawing Manager를 생성합니다
+var manager = new kakao.maps.Drawing.DrawingManager(options);
+
+// Toolbox를 생성합니다. 
+// Toolbox 생성 시 위에서 생성한 DrawingManager 객체를 설정합니다.
+// DrawingManager 객체를 꼭 설정해야만 그리기 모드와 매니저의 상태를 툴박스에 설정할 수 있습니다.
+var toolbox = new kakao.maps.Drawing.Toolbox({drawingManager: manager});
+
+// 지도 위에 Toolbox를 표시합니다
+// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOP은 위 가운데를 의미합니다.
+map.addControl(toolbox.getElement(), kakao.maps.ControlPosition.TOP);
+
+// 다각형 객체를 구성할 좌표배열입니다 
+var path3 = [
+    new kakao.maps.LatLng(35.156845, 129.057734),
+    new kakao.maps.LatLng(35.156841, 129.057847),
+    new kakao.maps.LatLng(35.156481, 129.058416),
+    new kakao.maps.LatLng(35.156411, 129.058443),
+    new kakao.maps.LatLng(35.155323, 129.058459),
+    new kakao.maps.LatLng(35.155310, 129.057751),
+];
+
+var hole3 = [
+    new kakao.maps.LatLng(35.156757, 129.057836),
+    new kakao.maps.LatLng(35.156424, 129.058357),
+    new kakao.maps.LatLng(35.155393, 129.058373),
+    new kakao.maps.LatLng(35.155380, 129.057852)
+];
+
+// 다각형을 생성하고 지도에 표시합니다
+var polygon3 = new kakao.maps.Polygon({
+    map: map,
+    path: [path3, hole3], // 좌표 배열의 배열로 하나의 다각형을 표시할 수 있습니다
+    strokeWeight: 2,
+    strokeColor: '#b26bb2',
+    strokeOpacity: 0.8,
+    fillColor: '#f9f',
+    fillOpacity: 0.7 
+});
+
+// 지도에 다각형을 표시합니다
+polygon3.setMap(map);
+
+// 다각형 객체를 구성할 좌표배열입니다 
+var path2 = [
+    new kakao.maps.LatLng(35.155402, 129.059843),
+    new kakao.maps.LatLng(35.155411, 129.060835),
+    new kakao.maps.LatLng(35.154915, 129.060862),
+    new kakao.maps.LatLng(35.154915, 129.059859)
+];
+
+var hole2 = [
+    new kakao.maps.LatLng(35.155328, 129.059939),
+    new kakao.maps.LatLng(35.155319, 129.060771),
+    new kakao.maps.LatLng(35.154981, 129.060781),
+    new kakao.maps.LatLng(35.154977, 129.059939)
+];
+
+// 다각형을 생성하고 지도에 표시합니다
+var polygon2 = new kakao.maps.Polygon({
+    map: map,
+    path: [path2, hole2], // 좌표 배열의 배열로 하나의 다각형을 표시할 수 있습니다
+    strokeWeight: 2,
+    strokeColor: '#b26bb2',
+    strokeOpacity: 0.8,
+    fillColor: '#f9f',
+    fillOpacity: 0.7 
+});
+
+// 지도에 다각형을 표시합니다
+polygon2.setMap(map);
+
+// 다각형 객체를 구성할 좌표배열입니다 
+var path = [
+    new kakao.maps.LatLng(35.156859, 129.060266),
+    new kakao.maps.LatLng(35.156433, 129.060888),
+    new kakao.maps.LatLng(35.155903, 129.060888),
+    new kakao.maps.LatLng(35.155889, 129.059847),
+    new kakao.maps.LatLng(35.156429, 129.059821)
+];
+
+var hole = [
+    new kakao.maps.LatLng(35.156758, 129.060272),
+    new kakao.maps.LatLng(35.156385, 129.060797),
+    new kakao.maps.LatLng(35.155959, 129.060797),
+    new kakao.maps.LatLng(35.155959, 129.059934),
+    new kakao.maps.LatLng(35.156429, 129.059928)
+];
+
+// 다각형을 생성하고 지도에 표시합니다
+var polygon = new kakao.maps.Polygon({
+    map: map,
+    path: [path, hole], // 좌표 배열의 배열로 하나의 다각형을 표시할 수 있습니다
+    strokeWeight: 2,
+    strokeColor: '#b26bb2',
+    strokeOpacity: 0.8,
+    fillColor: '#f9f',
+    fillOpacity: 0.7 
+});
+
+// 지도에 다각형을 표시합니다
+polygon.setMap(map);
+
+// 지도 타입 정보를 가지고 있을 객체입니다
+// map.addOverlayMapTypeId 함수로 추가된 지도 타입은
+// 가장 나중에 추가된 지도 타입이 가장 앞에 표시됩니다
+// 이 예제에서는 지도 타입을 추가할 때 지적편집도, 지형정보, 교통정보, 자전거도로 정보 순으로 추가하므로
+// 자전거 도로 정보가 가장 앞에 표시됩니다
+var mapTypes = {
+    terrain : kakao.maps.MapTypeId.TERRAIN,    
+    traffic :  kakao.maps.MapTypeId.TRAFFIC,
+    bicycle : kakao.maps.MapTypeId.BICYCLE,
+    useDistrict : kakao.maps.MapTypeId.USE_DISTRICT
+};
+
+// 지도에 교통정보를 표시하도록 지도타입을 추가합니다
+map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+
+
+// 체크 박스를 선택하면 호출되는 함수입니다
+function setOverlayMapTypeId() {
+    var chkTerrain = document.getElementById('chkTerrain'),  
+        chkTraffic = document.getElementById('chkTraffic'),
+        chkBicycle = document.getElementById('chkBicycle'),
+        chkUseDistrict = document.getElementById('chkUseDistrict');
+    
+    // 지도 타입을 제거합니다
+    for (var type in mapTypes) {
+        map.removeOverlayMapTypeId(mapTypes[type]);    
+    }
+
+    // 지적편집도정보 체크박스가 체크되어있으면 지도에 지적편집도정보 지도타입을 추가합니다
+    if (chkUseDistrict.checked) {
+        map.addOverlayMapTypeId(mapTypes.useDistrict);    
+    }
+    
+    // 지형정보 체크박스가 체크되어있으면 지도에 지형정보 지도타입을 추가합니다
+    if (chkTerrain.checked) {
+        map.addOverlayMapTypeId(mapTypes.terrain);    
+    }
+    
+    // 교통정보 체크박스가 체크되어있으면 지도에 교통정보 지도타입을 추가합니다
+    if (chkTraffic.checked) {
+        map.addOverlayMapTypeId(mapTypes.traffic);    
+    }
+    
+    // 자전거도로정보 체크박스가 체크되어있으면 지도에 자전거도로정보 지도타입을 추가합니다
+    if (chkBicycle.checked) {
+        map.addOverlayMapTypeId(mapTypes.bicycle);    
+    }
+    
+}
+
+// 마커를 표시할 위치와 title 객체 배열입니다 
+var positions = [
+    {
+        title: '불법주차차량', 
+        latlng: new kakao.maps.LatLng(35.155885, 129.055877)
+    },
+    {
+        title: '불법주차차량', 
+        latlng: new kakao.maps.LatLng(35.157376, 129.057143)
+    },
+    {
+        title: '불법주차차량', 
+        latlng: new kakao.maps.LatLng(35.157831, 129.062486)
+    },
+    {
+        title: '불법주차차량', 
+        latlng: new kakao.maps.LatLng(35.155002, 129.059092)
+    }
+];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(30, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+
+// 지도를 클릭했을때 클릭한 위치에 마커를 추가하도록 지도에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+    // 클릭한 위치에 마커를 표시합니다 
+    addMarker(mouseEvent.latLng);
+});
+
+// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+var markers = [];
+
+var imageSize00 = new kakao.maps.Size(20, 30); 
+
+// 마커 이미지를 생성합니다
+var imageSrc2 = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+var carImage = new kakao.maps.MarkerImage(imageSrc2, imageSize00);
+
+// 마커를 생성하고 지도위에 표시하는 함수입니다
+function addMarker(position) {
+    
+    // 자동차 gps
+    var marker = new kakao.maps.Marker({
+        position: position,
+        image: carImage,
+        title : '차량'
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+
+    // 생성된 마커를 배열에 추가합니다
+    markers.push(marker);
+}
+
+// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
+
+// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+function showMarkers() {
+    setMarkers(map)    
+}
+
+// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+function hideMarkers() {
+    setMarkers(null);    
+}
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places(map); 
+
+// 카테고리로 주차장을 검색합니다
+ps.categorySearch('PK6', placesSearchCB, {useMapBounds:true}); 
+
+// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+function placesSearchCB (data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+        for (var i=0; i<data.length; i++) {
+            displayMarker(data[i]);    
+        }       
+    }
+}
+
+// 지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+    // 주차장
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x),
+        title : place.place_name
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+        infowindow.open(map, marker);
+    });
+}
+
+var imageSrc2 = 'person.png', // 마커이미지의 주소입니다    
+    imageSize2 = new kakao.maps.Size(40, 45), // 마커이미지의 크기입니다
+    imageOption2 = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2),
+    markerPosition2 = new kakao.maps.LatLng(35.155724, 129.059161); // 마커가 표시될 위치입니다
+
+// 사람 (현재위치)
+var marker2 = new kakao.maps.Marker({
+    position: markerPosition2, 
+    image: markerImage2,
+    title : '현재위치'
+});
+
+// 마커를 지도에 표시합니다.
+// marker2.setClickable(true);
+marker2.setMap(map);
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "cctv_icon.png"; 
+
+// 마커를 표시할 위치입니다 
+var position =  new kakao.maps.LatLng(35.15632894, 129.0556119);
+
+// 마커 이미지를 생성합니다
+var imageSize3 = new kakao.maps.Size(40, 45);
+var markerImage3 = new kakao.maps.MarkerImage(imageSrc, imageSize3);
+
+// 마커를 생성합니다
+var marker = new kakao.maps.Marker({
+  position: position,
+  clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+  image : markerImage3
+});
+
+// 마커를 지도에 표시합니다.
+marker.setMap(map);
+
+// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent = '<div style="padding:5px;"><img src="./predictions.jpg" width="300" height="200" alt="부산광역시 사상구 감전1동 168-17 가야대로 360도전방면"></div>',
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({
+    content : iwContent,
+    removable : iwRemoveable
+});
+
+// 마커에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(marker, 'click', function() {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow.open(map, marker);  
+});
+
+
+
+// 마커를 표시할 위치입니다 
+var position =  new kakao.maps.LatLng(35.15717855, 129.0567513);
+
+// 마커 이미지를 생성합니다
+var imageSize22 = new kakao.maps.Size(40, 45);
+var markerImage22 = new kakao.maps.MarkerImage(imageSrc, imageSize22);
+
+// 마커를 생성합니다
+var marker22 = new kakao.maps.Marker({
+  position: position,
+  clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+  image : markerImage22
+});
+
+// 마커를 지도에 표시합니다.
+marker22.setMap(map);
+
+// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent22 = '<div style="padding:5px;"><img src="./2.jpg" width="300" height="200" alt="부산광역시 부산진구 부전2동 503-15가야대로 360도전방면"></div>',
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성합니다
+var infowindow22 = new kakao.maps.InfoWindow({
+    content : iwContent22,
+    removable : iwRemoveable
+});
+
+// 마커에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(marker22, 'click', function() {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow22.open(map, marker22);  
+});
+
+
+
+
+// 마커를 표시할 위치입니다 
+var position =  new kakao.maps.LatLng(35.1576854, 129.0591753);
+
+// 마커 이미지를 생성합니다
+var imageSize33 = new kakao.maps.Size(40, 45);
+var markerImage33 = new kakao.maps.MarkerImage(imageSrc, imageSize33);
+
+// 마커를 생성합니다
+var marker33 = new kakao.maps.Marker({
+  position: position,
+  clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+  image : markerImage33
+});
+
+// 마커를 지도에 표시합니다.
+marker33.setMap(map);
+
+// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent33 = '<div style="padding:5px;"><img src="./3.jpg" width="300" height="200" alt="부산광역시 연제구 연산동 2166-3 360도전방면"></div>',
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성합니다
+var infowindow33 = new kakao.maps.InfoWindow({
+    content : iwContent33,
+    removable : iwRemoveable
+});
+
+// 마커에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(marker33, 'click', function() {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow33.open(map, marker33);  
+});
+
+
+
+
+
+// 마커를 표시할 위치입니다 
+var position =  new kakao.maps.LatLng(35.15756543, 129.0593068);
+
+// 마커 이미지를 생성합니다
+var imageSize44 = new kakao.maps.Size(40, 45);
+var markerImage44 = new kakao.maps.MarkerImage(imageSrc, imageSize44);
+
+// 마커를 생성합니다
+var marker44 = new kakao.maps.Marker({
+  position: position,
+  clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+  image : markerImage44
+});
+
+// 마커를 지도에 표시합니다.
+marker44.setMap(map);
+
+// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent44 = '<div style="padding:5px;"><img src="./4.jpg" width="300" height="200" alt="부산광역시 부산진구 부전2동 156(가야대로) 360도전방면"></div>',
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성합니다
+var infowindow44 = new kakao.maps.InfoWindow({
+    content : iwContent44,
+    removable : iwRemoveable
+});
+
+// 마커에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(marker44, 'click', function() {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow44.open(map, marker44);  
+});
+
+
+
+
+// 마커를 표시할 위치입니다 
+var position =  new kakao.maps.LatLng(35.15796601, 129.0625891);
+
+// 마커 이미지를 생성합니다
+var imageSize3 = new kakao.maps.Size(40, 45);
+var markerImage3 = new kakao.maps.MarkerImage(imageSrc, imageSize3);
+
+// 마커를 생성합니다
+var marker5 = new kakao.maps.Marker({
+  position: position,
+  clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+  image : markerImage3
+});
+
+// 마커를 지도에 표시합니다.
+marker5.setMap(map);
+
+// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent5 = '<div style="padding:5px;"><img src="./cctv_detec.jpg" width="300" height="200" alt="부산광역시 부산진구 전포동 667-16(서전로) 360도전방면"></div>',
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성합니다
+var infowindow5 = new kakao.maps.InfoWindow({
+    content : iwContent5,
+    removable : iwRemoveable
+});
+
+// 마커에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(marker5, 'click', function() {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow5.open(map, marker5);  
+});
+
+
+
+
+// 마커를 표시할 위치입니다 
+var position =  new kakao.maps.LatLng(35.15460888, 129.0589525);
+
+// 마커 이미지를 생성합니다
+var imageSize66 = new kakao.maps.Size(40, 45);
+var markerImage66 = new kakao.maps.MarkerImage(imageSrc, imageSize44);
+
+// 마커를 생성합니다
+var marker66 = new kakao.maps.Marker({
+  position: position,
+  clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+  image : markerImage66
+});
+
+// 마커를 지도에 표시합니다.
+marker66.setMap(map);
+
+// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent66 = '<div style="padding:5px;"><img src="./6.jpg" width="300" height="200" alt="부산광역시 부산진구 부전2동 254(중앙로) 360도전방면"></div>',
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+// 인포윈도우를 생성합니다
+var infowindow66 = new kakao.maps.InfoWindow({
+    content : iwContent66,
+    removable : iwRemoveable    
+});
+
+// 마커에 클릭이벤트를 등록합니다
+kakao.maps.event.addListener(marker66, 'click', function() {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow66.open(map, marker66);  
+});
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

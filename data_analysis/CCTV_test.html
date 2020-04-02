@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_788b692fe0f14986b9a913d4a285448a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_788b692fe0f14986b9a913d4a285448a" ></div>
+        
+</body>
+<script>    
+    
+            var map_788b692fe0f14986b9a913d4a285448a = L.map(
+                "map_788b692fe0f14986b9a913d4a285448a",
+                {
+                    center: [35.155724, 129.059161],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 17,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f5527279fe1e463d9ba0969a6cf06e94 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var marker_98cf0fd2562d4c819dda76c3c593541f = L.marker(
+                [35.15460888, 129.0589525],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_4f247ce7a2014820a6fd93fb02465d07 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_98cf0fd2562d4c819dda76c3c593541f.setIcon(icon_4f247ce7a2014820a6fd93fb02465d07);
+        
+    
+        var popup_3b7ac5fc415c48af839fa131dcdef8b5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6158c1be5f3041648ac1cbcbea8e4507 = $(`<div id="html_6158c1be5f3041648ac1cbcbea8e4507" style="width: 100.0%; height: 100.0%;">부산광역시 부산진구 부전2동 254(중앙로) 360도전방면</div>`)[0];
+            popup_3b7ac5fc415c48af839fa131dcdef8b5.setContent(html_6158c1be5f3041648ac1cbcbea8e4507);
+        
+
+        marker_98cf0fd2562d4c819dda76c3c593541f.bindPopup(popup_3b7ac5fc415c48af839fa131dcdef8b5)
+        ;
+
+        
+    
+    
+            var marker_7bc57daeeeb4435f9e0d88b0fd135439 = L.marker(
+                [35.15756543, 129.0593068],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_e623a881befd4dc69aafbf117dbc30fe = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_7bc57daeeeb4435f9e0d88b0fd135439.setIcon(icon_e623a881befd4dc69aafbf117dbc30fe);
+        
+    
+        var popup_d316680ec6fb487f9d0a41ed3322c49c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_897461ba2ba04343aa91ad5e977c55b1 = $(`<div id="html_897461ba2ba04343aa91ad5e977c55b1" style="width: 100.0%; height: 100.0%;">부산광역시 부산진구 부전2동 156(가야대로) 360도전방면</div>`)[0];
+            popup_d316680ec6fb487f9d0a41ed3322c49c.setContent(html_897461ba2ba04343aa91ad5e977c55b1);
+        
+
+        marker_7bc57daeeeb4435f9e0d88b0fd135439.bindPopup(popup_d316680ec6fb487f9d0a41ed3322c49c)
+        ;
+
+        
+    
+    
+            var marker_8c115270461f46b496c6e3bb8b383220 = L.marker(
+                [35.15717855, 129.0567513],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_6ca4880117ed45579a82a48ed69d0c07 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_8c115270461f46b496c6e3bb8b383220.setIcon(icon_6ca4880117ed45579a82a48ed69d0c07);
+        
+    
+        var popup_33bc51c1024f412ead54d731177e7cab = L.popup({"maxWidth": "100%"});
+
+        
+            var html_00d2cae2afa742289f40be431445b77e = $(`<div id="html_00d2cae2afa742289f40be431445b77e" style="width: 100.0%; height: 100.0%;">부산광역시 부산진구 부전2동 503-15가야대로 360도전방면</div>`)[0];
+            popup_33bc51c1024f412ead54d731177e7cab.setContent(html_00d2cae2afa742289f40be431445b77e);
+        
+
+        marker_8c115270461f46b496c6e3bb8b383220.bindPopup(popup_33bc51c1024f412ead54d731177e7cab)
+        ;
+
+        
+    
+    
+            var marker_62655cedf9354b54a0805bf2f9395554 = L.marker(
+                [35.15632894, 129.0556119],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_426f883d78294d7a9a09e5806cb8aaee = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_62655cedf9354b54a0805bf2f9395554.setIcon(icon_426f883d78294d7a9a09e5806cb8aaee);
+        
+    
+        var popup_614409bb756c4e1ca612b68af5ba792d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ec09c4bf908941bb883e7577b738e608 = $(`<div id="html_ec09c4bf908941bb883e7577b738e608" style="width: 100.0%; height: 100.0%;">부산광역시 사상구 감전1동 168-17 가야대로 360도전방면</div>`)[0];
+            popup_614409bb756c4e1ca612b68af5ba792d.setContent(html_ec09c4bf908941bb883e7577b738e608);
+        
+
+        marker_62655cedf9354b54a0805bf2f9395554.bindPopup(popup_614409bb756c4e1ca612b68af5ba792d)
+        ;
+
+        
+    
+    
+            var marker_cd1ede1173394f5588a16de167743b98 = L.marker(
+                [35.15796601, 129.0625891],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_c83e1ae4ff714de3b84895d4600cf765 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_cd1ede1173394f5588a16de167743b98.setIcon(icon_c83e1ae4ff714de3b84895d4600cf765);
+        
+    
+        var popup_9d15f5e00f0346adb053460501149184 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_11027759f22548ca8f4dd0b985f71ab6 = $(`<div id="html_11027759f22548ca8f4dd0b985f71ab6" style="width: 100.0%; height: 100.0%;">부산광역시 부산진구 전포동 667-16(서전로) 360도전방면</div>`)[0];
+            popup_9d15f5e00f0346adb053460501149184.setContent(html_11027759f22548ca8f4dd0b985f71ab6);
+        
+
+        marker_cd1ede1173394f5588a16de167743b98.bindPopup(popup_9d15f5e00f0346adb053460501149184)
+        ;
+
+        
+    
+    
+            var marker_9524c3f588e041b2a62e5362eacb80d3 = L.marker(
+                [35.1576854, 129.0591753],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_780a45c8fa0744e98f45b62720f3e958 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_9524c3f588e041b2a62e5362eacb80d3.setIcon(icon_780a45c8fa0744e98f45b62720f3e958);
+        
+    
+        var popup_d1ee121926ed49f29076103df8f25878 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1a55a8a4a8d447dbb7f08f42cd8196af = $(`<div id="html_1a55a8a4a8d447dbb7f08f42cd8196af" style="width: 100.0%; height: 100.0%;">부산광역시 동래구 낙민동 231 360도전방면</div>`)[0];
+            popup_d1ee121926ed49f29076103df8f25878.setContent(html_1a55a8a4a8d447dbb7f08f42cd8196af);
+        
+
+        marker_9524c3f588e041b2a62e5362eacb80d3.bindPopup(popup_d1ee121926ed49f29076103df8f25878)
+        ;
+
+        
+    
+    
+            var marker_4c375216a0ca4ddcaa9b190be8e69ae4 = L.marker(
+                [35.1576854, 129.0591753],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_e0ac5531c3e64b8a986c341aef9f8ed7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_4c375216a0ca4ddcaa9b190be8e69ae4.setIcon(icon_e0ac5531c3e64b8a986c341aef9f8ed7);
+        
+    
+        var popup_b29e79edd78c4be5a7b875b64a475bc6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fb90e2bde2d7480587ac39855b187ece = $(`<div id="html_fb90e2bde2d7480587ac39855b187ece" style="width: 100.0%; height: 100.0%;">부산광역시 동래구 명륜동 755 360도전방면</div>`)[0];
+            popup_b29e79edd78c4be5a7b875b64a475bc6.setContent(html_fb90e2bde2d7480587ac39855b187ece);
+        
+
+        marker_4c375216a0ca4ddcaa9b190be8e69ae4.bindPopup(popup_b29e79edd78c4be5a7b875b64a475bc6)
+        ;
+
+        
+    
+    
+            var marker_0e3d313e63a5436789eeb8fa3df19006 = L.marker(
+                [35.1576854, 129.0591753],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_c13fc377259b4477997c2a4cfc61cd15 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_0e3d313e63a5436789eeb8fa3df19006.setIcon(icon_c13fc377259b4477997c2a4cfc61cd15);
+        
+    
+        var popup_1a152fc2dec2439fb373a5b3baaa8b95 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2de5d33256134181bdaa6f0faa450988 = $(`<div id="html_2de5d33256134181bdaa6f0faa450988" style="width: 100.0%; height: 100.0%;">부산광역시 동래구 수안동 360도전방면</div>`)[0];
+            popup_1a152fc2dec2439fb373a5b3baaa8b95.setContent(html_2de5d33256134181bdaa6f0faa450988);
+        
+
+        marker_0e3d313e63a5436789eeb8fa3df19006.bindPopup(popup_1a152fc2dec2439fb373a5b3baaa8b95)
+        ;
+
+        
+    
+    
+            var marker_b7c048c0f26a4a448309f1e9d48bd59a = L.marker(
+                [35.1576854, 129.0591753],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_47dd796260da4622a32b8ce84f2f5a16 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b7c048c0f26a4a448309f1e9d48bd59a.setIcon(icon_47dd796260da4622a32b8ce84f2f5a16);
+        
+    
+        var popup_de1ec53c0d484ac781441360d901e9d0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_084f6fc9181f4a4a95f46195248e113d = $(`<div id="html_084f6fc9181f4a4a95f46195248e113d" style="width: 100.0%; height: 100.0%;">부산광역시 동래구 안락동 360도전방면</div>`)[0];
+            popup_de1ec53c0d484ac781441360d901e9d0.setContent(html_084f6fc9181f4a4a95f46195248e113d);
+        
+
+        marker_b7c048c0f26a4a448309f1e9d48bd59a.bindPopup(popup_de1ec53c0d484ac781441360d901e9d0)
+        ;
+
+        
+    
+    
+            var marker_50ecfba2055d433a8873ac44c4a8bb18 = L.marker(
+                [35.1576854, 129.0591753],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_2b4ccf2b9a154d86b556e8bd86fd9521 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_50ecfba2055d433a8873ac44c4a8bb18.setIcon(icon_2b4ccf2b9a154d86b556e8bd86fd9521);
+        
+    
+        var popup_b4cf2119329845119c1552c4e1243c30 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2bcc4e3dba45435c99b9d3ddb055666d = $(`<div id="html_2bcc4e3dba45435c99b9d3ddb055666d" style="width: 100.0%; height: 100.0%;">부산광역시 연제구 연산동 2166-3 360도전방면</div>`)[0];
+            popup_b4cf2119329845119c1552c4e1243c30.setContent(html_2bcc4e3dba45435c99b9d3ddb055666d);
+        
+
+        marker_50ecfba2055d433a8873ac44c4a8bb18.bindPopup(popup_b4cf2119329845119c1552c4e1243c30)
+        ;
+
+        
+    
+    
+            var marker_4eb986754f1b4ef2858c2df8aa9f4b08 = L.marker(
+                [35.15717855, 129.0567513],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_d21325ede7f34d2db2f0982f65c2d6f2 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_4eb986754f1b4ef2858c2df8aa9f4b08.setIcon(icon_d21325ede7f34d2db2f0982f65c2d6f2);
+        
+    
+        var popup_3cba27c61dc0411988abc324c7b89035 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_78a567ae75b64576891cedb15704b6d4 = $(`<div id="html_78a567ae75b64576891cedb15704b6d4" style="width: 100.0%; height: 100.0%;">부산광역시 부산진구 부전2동 503-15가야대로 360도전방면</div>`)[0];
+            popup_3cba27c61dc0411988abc324c7b89035.setContent(html_78a567ae75b64576891cedb15704b6d4);
+        
+
+        marker_4eb986754f1b4ef2858c2df8aa9f4b08.bindPopup(popup_3cba27c61dc0411988abc324c7b89035)
+        ;
+
+        
+    
+    
+            var marker_afab67d9eb2a4ed9bc08152af2c75cec = L.marker(
+                [35.15717855, 129.0567513],
+                {}
+            ).addTo(map_788b692fe0f14986b9a913d4a285448a);
+        
+    
+            var icon_d2e556929d6a4df99f7b7a070157a0f8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_afab67d9eb2a4ed9bc08152af2c75cec.setIcon(icon_d2e556929d6a4df99f7b7a070157a0f8);
+        
+    
+        var popup_0d5b6cb97eee4514bf3ca3b1d0393dd5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c0d58457453c458aae5d5a3a2e73e723 = $(`<div id="html_c0d58457453c458aae5d5a3a2e73e723" style="width: 100.0%; height: 100.0%;">부산광역시 부산진구 부전2동 503-15가야대로 360도전방면</div>`)[0];
+            popup_0d5b6cb97eee4514bf3ca3b1d0393dd5.setContent(html_c0d58457453c458aae5d5a3a2e73e723);
+        
+
+        marker_afab67d9eb2a4ed9bc08152af2c75cec.bindPopup(popup_0d5b6cb97eee4514bf3ca3b1d0393dd5)
+        ;
+
+        
+    
+</script>
